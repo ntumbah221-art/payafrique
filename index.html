@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayAfrique - Mobile Money RDC</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen">
+<div class="bg-gradient-to-r from-orange-500 to-red-600 p-5 rounded-b-[30px]">
+<div class="flex justify-between items-center">
+<div><h1 class="text-2xl font-black">⚡ PayAfrique</h1><p class="text-xs opacity-90">M-Pesa • Orange • Airtel • Africell</p></div>
+<div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center"><i class="fas fa-user"></i></div>
+</div>
+<div class="bg-black/30 backdrop-blur mt-5 p-4 rounded-2xl">
+<p class="text-xs opacity-70">Solde disponible</p>
+<h2 class="text-3xl font-black mt-1"><span id="balance">125,450</span> <span class="text-lg">CDF</span></h2>
+<p class="text-xs mt-1">≈ $45.20 USD</p>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-3 p-5">
+<button onclick="showSend()" class="bg-white/10 p-4 rounded-2xl flex flex-col items-center gap-2"><div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center"><i class="fas fa-paper-plane"></i></div><span class="text-xs font-semibold">Envoyer</span></button>
+<button onclick="showReceive()" class="bg-white/10 p-4 rounded-2xl flex flex-col items-center gap-2"><div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center"><i class="fas fa-qrcode"></i></div><span class="text-xs font-semibold">Recevoir</span></button>
+<button class="bg-white/10 p-4 rounded-2xl flex flex-col items-center gap-2"><div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center"><i class="fas fa-history"></i></div><span class="text-xs font-semibold">Historique</span></button>
+<button class="bg-white/10 p-4 rounded-2xl flex flex-col items-center gap-2"><div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center"><i class="fas fa-sim-card"></i></div><span class="text-xs font-semibold">Forfaits</span></button>
+</div>
+<div class="px-5">
+<h3 class="font-bold mb-3">Opérateurs RDC</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-gradient-to-br from-red-600 to-red-800 p-4 rounded-2xl"><p class="font-black text-lg">M-Pesa</p><p class="text-xs opacity-80">Vodacom • 60% part</p><p class="text-xs mt-2 bg-white/20 inline-block px-2 py-1 rounded-full">Frais 1%</p></div>
+<div class="bg-gradient-to-br from-orange-500 to-orange-700 p-4 rounded-2xl"><p class="font-black text-lg">Orange Money</p><p class="text-xs opacity-80">Orange • 25% part</p><p class="text-xs mt-2 bg-white/20 inline-block px-2 py-1 rounded-full">Frais 1%</p></div>
+<div class="bg-gradient-to-br from-red-500 to-pink-600 p-4 rounded-2xl"><p class="font-black text-lg">Airtel Money</p><p class="text-xs opacity-80">Airtel</p><p class="text-xs mt-2 bg-white/20 inline-block px-2 py-1 rounded-full">Frais 1%</p></div>
+<div class="bg-gradient-to-br from-blue-600 to-blue-800 p-4 rounded-2xl"><p class="font-black text-lg">Africell Money</p><p class="text-xs opacity-80">Africell</p><p class="text-xs mt-2 bg-white/20 inline-block px-2 py-1 rounded-full">Frais 1%</p></div>
+</div>
+</div>
+<div id="sendModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur p-5 flex items-end z-50">
+<div class="bg-[#1a1a1a] w-full rounded-[30px] p-6">
+<div class="w-12 h-1 bg-white/20 rounded-full mx-auto mb-5"></div>
+<h3 class="text-xl font-black mb-4">Envoyer de l'argent</h3>
+<label class="text-xs opacity-70">Numéro destinataire</label>
+<input id="phone" type="tel" placeholder="Ex: 0812345678" class="w-full bg-white/10 p-4 rounded-xl mt-1 mb-4 outline-none">
+<label class="text-xs opacity-70">Montant (CDF)</label>
+<input id="amount" type="number" placeholder="Ex: 5000" class="w-full bg-white/10 p-4 rounded-xl mt-1 mb-4 outline-none">
+<label class="text-xs opacity-70">Opérateur</label>
+<select id="operator" class="w-full bg-white/10 p-4 rounded-xl mt-1 mb-5 outline-none"><option>M-Pesa</option><option>Orange Money</option><option>Airtel Money</option><option>Africell Money</option></select>
+<div class="flex justify-between text-sm mb-4 bg-white/5 p-3 rounded-xl"><span>Frais (1%):</span><span id="fees">0 CDF</span></div>
+<button onclick="sendMoney()" class="w-full bg-gradient-to-r from-orange-500 to-red-600 py-4 rounded-xl font-black text-lg">ENVOYER MAINTENANT</button>
+<button onclick="hideSend()" class="w-full mt-3 py-3 text-sm opacity-60">Annuler</button>
+</div>
+</div>
+<div class="px-5 mt-6 pb-10"><div class="flex justify-between items-center mb-3"><h3 class="font-bold">Transactions récentes</h3><span class="text-xs text-orange-400">Voir tout</span></div><div id="txList" class="space-y-3"></div></div>
+<script>
+let bal=125450;let txs=JSON.parse(localStorage.getItem('payafrique_tx')||'[]');if(txs.length==0){txs=[{name:'Maman',phone:'082... 345',amount:15000,op:'M-Pesa',time:"Aujourd'hui 14:30",type:'recu'},{name:'Jean K.',phone:'099... 890',amount:-5000,op:'Orange',time:'Hier 18:20',type:'envoye'},{name:'Boutique Shop',phone:'081... 123',amount:-2500,op:'Airtel',time:'Hier 09:15',type:'envoye'}];}
+function render(){document.getElementById('txList').innerHTML=txs.map(t=>`<div class="bg-white/10 p-4 rounded-2xl flex justify-between items-center"><div class="flex gap-3 items-center"><div class="w-10 h-10 rounded-full ${t.type=='recu'?'bg-green-500/20 text-green-400':'bg-red-500/20 text-red-400'} flex items-center justify-center"><i class="fas fa-${t.type=='recu'?'arrow-down':'arrow-up'}"></i></div><div><p class="font-bold text-sm">${t.name}</p><p class="text-[11px] opacity-60">${t.phone} • ${t.op} • ${t.time}</p></div></div><p class="font-black ${t.type=='recu'?'text-green-400':'text-white'}">${t.amount>0?'+':''}${t.amount.toLocaleString()} CDF</p></div>`).join('');}render();
+document.getElementById('amount')?.addEventListener('input',e=>{let v=parseInt(e.target.value)||0;document.getElementById('fees').innerText=Math.round(v*0.01).toLocaleString()+' CDF';});
+function showSend(){document.getElementById('sendModal').classList.remove('hidden')}function hideSend(){document.getElementById('sendModal').classList.add('hidden')}function showReceive(){alert('QR Code: PayAfrique - 0812345678\nPartage ce numéro pour recevoir!')}
+function sendMoney(){let phone=document.getElementById('phone').value;let amount=parseInt(document.getElementById('amount').value);let op=document.getElementById('operator').value;if(!phone||!amount){alert('Remplis tout BOSS!');return;}if(amount>bal){alert('Solde insuffisant!');return;}bal-=amount;document.getElementById('balance').innerText=bal.toLocaleString();txs.unshift({name:phone,phone:phone,amount:-amount,op:op,time:'Maintenant',type:'envoye'});localStorage.setItem('payafrique_tx',JSON.stringify(txs));render();hideSend();alert('Succès BOSS! '+amount.toLocaleString()+' CDF envoyé à '+phone+' via '+op);document.getElementById('phone').value='';document.getElementById('amount').value='';}
+</script>
+</body>
+</html>
