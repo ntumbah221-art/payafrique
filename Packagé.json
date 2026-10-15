@@ -1,0 +1,15 @@
+{
+  "name": "payafrique-pro",
+  "version": "1.0.0",
+  "description": "African Mobile Money SDK - Validation for M-Pesa, Orange Money, Airtel Money + Currency conversion CDF, XOF, NGN, KES, ZAR",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "keywords": ["africa", "m-pesa", "congo", "mobile-money", "cdf", "payafrique"],
+  "author": "ntumbah221-art",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}
